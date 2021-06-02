@@ -1,4 +1,6 @@
-# Flask App Template
+# Dhivehi Reader
+
+Web app to read dhivehi websites/
 
 
 ## Deploy to Heroku
