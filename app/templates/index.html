@@ -1,0 +1,25 @@
+  
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="Content-Security-Policy"
+		content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *;img-src 'self' data:">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" href="/static/styles/controls.css?{{ range(1,99999999) | random }}" type="text/css">
+	<link rel="stylesheet" href="/static/styles/app.css?{{ range(1,99999999) | random }}" type="text/css">
+	<link rel="manifest" href="/manifest.webmanifest?{{ range(1,99999999) | random }}">
+
+	<title>Flask App Template</title>
+</head>
+
+<body>
+    <h1>Hello Flask App Template</h1>
+    <p>
+        Hello
+    </p>
+</body>
+
+</html>

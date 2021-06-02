@@ -1,0 +1,32 @@
+{
+    "short_name": "AutoMO",
+    "name": "Flask App Template",
+    "description": "Flask App Template",
+    "icons": [
+        {
+            "src": "/static/images/icons-96.png",
+            "type": "image/png",
+            "sizes": "96x96"
+        },
+        {
+            "src": "/static/images/icons-144.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        },
+        {
+            "src": "/static/images/icons-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "/static/images/icons-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "/",
+    "background_color": "#f8f9fa",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#f8f9fa"
+}
