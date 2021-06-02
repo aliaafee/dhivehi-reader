@@ -6,6 +6,6 @@ Web app to read dhivehi websites/
 ## Deploy to Heroku
 
     heroku login
-    heroku create flask-app-template
+    heroku create dhivehi-reader
     git push heroku master
     
