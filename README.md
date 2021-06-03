@@ -1,6 +1,6 @@
 # Dhivehi Reader
 
-Web app to read dhivehi text. Based on machine tts machine learning models available at https://github.com/DhivehiAI/TTS-Demos. Hope the model get furthure improvements.
+Web app to read dhivehi text. Based on tts machine learning models available at https://github.com/DhivehiAI/TTS-Demos. Hope the model gets furthure improvements.
 
 ![Demo Animation](../assets/screenshot-01.png?raw=true)
 
