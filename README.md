@@ -7,15 +7,17 @@ TODO: Support for scraping dhivehi language websites when url of page is provide
 ## Setup
 * Install required dependancies `pip install -r requirements.txt`
 * Download pre-trained models see https://github.com/DhivehiAI/TTS-Demos for instructions
-* Extract and place the model files in ./app/dv_tts/models/
+* Extract the model files to ./app/dv_tts/models/
 
 
 ## Run the server
-* Run a test server
+Run a test server
+
     python wsgy.py
 
-* Run with gunicorn
-    gunicorn wsdy:app
+Run with gunicorn
+
+    gunicorn wsgy:app
 
 ## Deploy to Docker
 * TODO
