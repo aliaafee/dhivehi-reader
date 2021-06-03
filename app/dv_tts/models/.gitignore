@@ -1,2 +1,5 @@
 female/*
+!female/.gitkeep
+
 male/*
+!male/.gitkeep
