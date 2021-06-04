@@ -1,7 +1,7 @@
 {
-  "name": "automo-client",
+  "name": "dhivehi-reader",
   "version": "1.0.0",
-  "description": "Javascript client for AutoMO-Server.",
+  "description": "Dhivehi Reader",
   "main": "src/index.js",
   "scripts": {
     "build": "browserify src/index.js -o ../app/static/scripts/bundle.js",
