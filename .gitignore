@@ -1,3 +1,6 @@
+# Old Files
+*.old
+
 # VSCode
 .vscode/
 
