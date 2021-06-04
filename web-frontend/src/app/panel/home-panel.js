@@ -68,11 +68,7 @@ module.exports = class HomePage extends Page {
     createElement() {
         super.createElement();
 
-        this.element.innerHTML = `
-            <p>
-                ތިރީގައިވާ ހުސްތަނުގައި ލިޔެލުމައްފަހު "ޕްލޭ" ބަޓަން އަށް ފިތާލާ.
-            </p>
-        `
+        this.element.innerHTML = `<p>ތިރީގައިވާ ހުސްތަނުގައި ލިޔެލުމައްފަހު "ޕްލޭ" ބަޓން އަށް ފިތާލާ.</p>`
 
         this._toolBarElement = document.createElement('div')
         this._toolBarElement.className = 'playback-toolbar'
