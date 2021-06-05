@@ -4,7 +4,7 @@ Web app to read dhivehi text. Based on tts machine learning models available at 
 
 ![Demo Animation](../assets/screenshot-02.png?raw=true)
 
-TODO: Support for scraping dhivehi language websites when url of page is provided.
+TODO: Add more supported websites, add support for reading docx, pdf.
 
 ## Setup
 * Install required dependencies `pip install -r requirements.txt`
