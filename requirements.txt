@@ -10,4 +10,5 @@ tensorflow
 numpy
 soundfile
 gunicorn
+bs4
 
