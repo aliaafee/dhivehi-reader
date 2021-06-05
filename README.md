@@ -4,7 +4,7 @@ Web app to read dhivehi text. Based on tts machine learning models available at 
 
 ![Demo Animation](../assets/screenshot-02.png?raw=true)
 
-TODO: Add more supported websites, add support for reading docx, pdf. See [How To Add New Scraper](dhivehi-reader/app/web_scrape/scrapers/README.md)
+TODO: Add more supported websites, add support for reading docx, pdf. See [How To Add New Scraper](app/web_scrape/scrapers/README.md)
 
 ## Setup
 * Install required dependencies `pip install -r requirements.txt`
