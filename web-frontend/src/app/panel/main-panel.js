@@ -1,7 +1,8 @@
 const Control = require('../../controls/control');
 const Button = require('../../controls/button');
-const HomePanel = require('./home-panel');
-
+const TextReaderPage = require('./text-reader-page');
+const WebsiteReaderPage = require('./website-reader-page');
+const AboutPage = require('./about-page')
 
 module.exports = class MainPanel extends Control {
     constructor(options={}) {
@@ -10,7 +11,14 @@ module.exports = class MainPanel extends Control {
         this._titleText = options.titleText
         this._subTitleText = options.subTitleText
 
-        this._homePanel = new HomePanel()
+        this.setPages(
+            {
+                'textReader': new TextReaderPage(),
+                'websiteReader': new WebsiteReaderPage(),
+                'about': new AboutPage()
+            }
+        )
+        this._defaultPage = "websiteReader"
 
         this._menuItems = [];
         this._sidebarItems = [];
@@ -38,31 +46,32 @@ module.exports = class MainPanel extends Control {
         //this.addMenuItem(this._userButton)
         //this.addMenuItem(this._logoutButton)
 
+        
+        this.addSidebarItem(
+            new Button(
+                'Read Web Page',
+                (event) => {
+                    this.gotoPage('websiteReader')
+                },
+                {
+                    icon: 'globe'
+                }
+            )
+        )
+        
+        
+        this.addSidebarItem(
+            new Button(
+                'Read Text',
+                (event) => {
+                    this.gotoPage('textReader')
+                },
+                {
+                    icon: 'file-text'
+                }
+            )
+        )
         /*
-        this.addSidebarItem(
-            new Button(
-                'Home',
-                (event) => {
-                    console.log('Home')
-                },
-                {
-                    icon: 'home'
-                }
-            )
-        )
-        
-        
-        this.addSidebarItem(
-            new Button(
-                'Button 1',
-                (event) => {
-                    console.log('Button 1')
-                },
-                {
-                    icon: 'tool'
-                }
-            )
-        )
         this.addSidebarItem(
             new Button(
                 'Button 2', 
@@ -84,22 +93,26 @@ module.exports = class MainPanel extends Control {
                     icon: 'map-pin'
                 }
             )
-        )
+        )*/
         
 
         this.addSidebarSpacer()
         this.addSidebarItem(
             new Button(
-                'Settings',
+                'މަޢުލޫމާތު',
                 () => {
-                    console.log('Settings')
+                    this.gotoPage('about')
                 },
                 {
-                    icon: 'settings'
+                    icon: 'help-circle'
                 }
             )
         )
-        */
+        
+    }
+
+    setPages(pages) {
+        this._pages = pages
     }
 
     addMenuItem(item) {
@@ -168,6 +181,15 @@ module.exports = class MainPanel extends Control {
         return this._sideBarElement;
     }
 
+    gotoPage(name) {
+        Object.entries(this._pages).forEach(
+            ([name, page]) => {
+                page.hide()
+            }
+        )
+        this._pages[name].show()
+    }
+
     createElement() {
         super.createElement();
 
@@ -187,7 +209,17 @@ module.exports = class MainPanel extends Control {
         this._mainElement.className = 'main-content';
         bodyElem.appendChild(this._mainElement)
 
-        this._mainElement.appendChild(this._homePanel.createElement());        
+        //this._mainElement.appendChild(this._homePanel.createElement());
+
+        this._mainElement.append(
+            ...Object.entries(this._pages).map(
+                ([name, page]) => {
+                    return page.createElement();
+                }
+            )
+        )
+
+        this.gotoPage(this._defaultPage)
 
         return this.element;
     }

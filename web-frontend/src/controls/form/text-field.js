@@ -13,7 +13,8 @@ module.exports = class TextField extends Field {
             rows: options.rows,
             resize: options.resize,
             grow: options.grow,
-            maxGrow: options.maxGrow
+            maxGrow: options.maxGrow,
+            className: options.className
         });
 
         this._lockedView = new Control({

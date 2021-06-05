@@ -3,7 +3,7 @@ const TextBox = require("../../controls/text-box")
 const Button = require("../../controls/button")
 const Spinner = require("../../controls/spinner")
 
-module.exports = class HomePage extends Page {
+module.exports = class TextReaderPage extends Page {
     constructor(options) {
         super(options)
 

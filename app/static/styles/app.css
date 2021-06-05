@@ -1,7 +1,7 @@
 :root {
     --menu-bar-height: 40px;
-    --side-bar-width: 0px;
-    --bottom-bar-height: 0px;
+    --side-bar-width: 40px;
+    --bottom-bar-height: 47px;
 }
 
 @font-face {
@@ -20,6 +20,24 @@ html {
     font-family: MV Faseyha;
     font-size: 12pt;
     line-height: unset;
+}
+
+input {
+    min-height: 37px;
+}
+
+input.url {
+    direction: ltr;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11pt;
+}
+
+.article-display {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    margin-top: 10px;
+    background-color: var(--white);
 }
 
 .playback-toolbar {

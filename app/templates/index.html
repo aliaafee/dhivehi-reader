@@ -16,7 +16,9 @@
 
 <body>
 	<script>
-		ttsUrl = "{{url_for('api.from_text')}}"
+		ttsUrl = "{{url_for('api.from_text', _external=True)}}"
+		webTtsUrl = "{{url_for('api.from_url', _external=True)}}"
+
 	</script>
 	<script src="/static/scripts/bundle.js">
 	</script>
