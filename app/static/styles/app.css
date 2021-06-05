@@ -132,6 +132,7 @@ button.menu-bar-item:focus {
     flex-direction: column;
     padding-left: calc(50% - 400px);
     padding-right: calc(50% - 400px);
+    overflow-y: auto;
 }
 
 .side-bar-item {
