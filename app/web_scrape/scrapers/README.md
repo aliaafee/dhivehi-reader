@@ -1,6 +1,6 @@
 # Adding a New Scraper
 
-New scraper should have a function `scrape.html`
+New scraper should have a function `scrape(html_text)` which accepts raw html text.
 
 Should return a dictionary with following keys. Keys may have empty values.
 
