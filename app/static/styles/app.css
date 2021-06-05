@@ -130,6 +130,8 @@ button.menu-bar-item:focus {
     width: calc(100% - var(--side-bar-width));
     display: flex;
     flex-direction: column;
+    padding-left: calc(50% - 400px);
+    padding-right: calc(50% - 400px);
 }
 
 .side-bar-item {
@@ -204,6 +206,7 @@ button.side-bar-item:focus {
         width: 100%;
         margin-top: var(--menu-bar-height);
         margin-bottom: var(--bottom-bar-height);
+        padding: unset;
     }
 
     .side-bar {
@@ -255,5 +258,9 @@ button.side-bar-item:focus {
 
     .menu-bar-item .label {
         display: none;
+    }
+
+    .main-content {
+        padding: unset;
     }
 }
