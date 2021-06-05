@@ -2,7 +2,7 @@
 
 New scraper should have a function `scrape(html_text)` which accepts raw html text.
 
-Should return a dictionary with following keys. Keys may have empty values.
+Should return a dictionary with following keys. Keys may have empty values. `['content']` should be a list of strings.
 
     result = {
         'title': "",
