@@ -2,7 +2,7 @@
 
 Web app to read dhivehi text. Based on tts machine learning models available at https://github.com/DhivehiAI/TTS-Demos. Hope the model gets furthure improvements.
 
-![Demo Animation](../assets/screenshot-01.png?raw=true)
+![Demo Animation](../assets/screenshot-02.png?raw=true)
 
 TODO: Support for scraping dhivehi language websites when url of page is provided.
 
