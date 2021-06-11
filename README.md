@@ -15,11 +15,11 @@ TODO: Add more supported websites, add support for reading docx, pdf. See [How T
 ## Run the server
 Run a test server
 
-    python wsgy.py
+    python wsgi.py
 
 Run with gunicorn
 
-    gunicorn wsgy:app
+    gunicorn wsgi:app
 
 ## Deploy to Docker
 * TODO
