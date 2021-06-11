@@ -11,6 +11,10 @@ def scrape_page(url):
         print("Appropriate page scraper not found")
         return None
 
-    page_response = requests.get(url)
+    try:
+        page_response = requests.get(url)
+    except ConnectionError:
+        print("Connection Error")
+        return None
 
     return scraper(page_response.text)

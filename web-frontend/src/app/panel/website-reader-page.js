@@ -50,6 +50,11 @@ module.exports = class WebsiteReaderPage extends Page {
                 console.log(json);
                 this.playAudio(json.audio_url);
                 this.displayArticle(json.article);
+                if (json.transcript) {
+                    this.displayTranscript(json.transcript)
+                } else {
+                    this.displayTranscript("")
+                }
             }
             this._spinner.hideSoft()
         };
@@ -103,6 +108,16 @@ module.exports = class WebsiteReaderPage extends Page {
         }
     }
 
+    displayTranscript(transcript) {
+        if (!(transcript)) {
+            this._transcriptElement.style.display = "none"
+            this._transcriptElement.innerText = ""
+            return
+        }
+        this._transcriptElement.style.display = "block"
+        this._transcriptElement.innerText = transcript
+    }
+
     createElement() {
         super.createElement()
 
@@ -120,6 +135,11 @@ module.exports = class WebsiteReaderPage extends Page {
         this._displayElement = document.createElement('div')
         this._displayElement.className = 'article-display'
         this.element.append(this._displayElement)
+
+        this._transcriptElement = document.createElement('div')
+        this._transcriptElement.className = 'article-display'
+        this.element.append(this._transcriptElement)
+        this._transcriptElement.style.display = 'none'
 
         this._spinner.hideSoft()
 
