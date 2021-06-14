@@ -6,7 +6,8 @@ from . import mihaaru
 
 
 SCRAPERS = {
-    'mihaaru.com': mihaaru.scrape
+    'mihaaru.com': mihaaru.scrape,
+    'dhen.mv': dhen.scrape
 }
 
 
