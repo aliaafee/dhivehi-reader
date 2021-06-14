@@ -2,7 +2,7 @@ from urllib.parse import urlparse
 
 from requests.models import ReadTimeoutError
 
-from . import mihaaru
+from . import mihaaru, dhen
 
 
 SCRAPERS = {
