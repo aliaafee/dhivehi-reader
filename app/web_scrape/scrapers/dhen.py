@@ -2,7 +2,6 @@
 News Article Scaper dhen.mv
 """
 from bs4 import BeautifulSoup
-from requests import get
 
 months = {"January":"ޖެނުއަރީ",
           "February":"ފެބުރުއަރީ",
