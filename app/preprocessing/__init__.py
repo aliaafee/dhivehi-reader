@@ -3,7 +3,7 @@ from urllib import parse
 
 from .num2words import num2words
 
-time_re = re.compile(r"(0?[1-9]|1[0-2]):[0-5][0-9]") #match HH:MM 
+time_re = re.compile(r"([0-1]?[0-9]|2[0-3]):[0-5][0-9]") #match HH:MM 
 number_re = re.compile(r"[+-]?([0-9]*[.])?[0-9]+")   #match all numbers including floats
 
 

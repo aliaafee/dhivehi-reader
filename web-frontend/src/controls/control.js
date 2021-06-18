@@ -104,6 +104,11 @@ module.exports = class Control {
         return (vertInView);
     }
 
+    scrollIntoView() {
+        console.log("Scrolling to view")
+        this.element.scrollIntoView()
+    }
+
     lock() {
         this.element.classList.add('locked')
     }

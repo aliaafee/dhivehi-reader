@@ -9,19 +9,35 @@ module.exports = class WebsiteReaderPage extends Page {
     constructor(options) {
         super(options)
 
+        this._player = new ArticlePlayer(
+            () => {
+                this._stopButton.show()
+            }
+        )
+
+        this._url = ""
+
         this.form = new WebsiteReaderForm()
 
         this._playButton = new Button(
             'ޕްލޭ',
             () => {
-                this.webToSpeech(
-                    webTtsUrl,
-                    this.form.value().url
-                )
+                this.webToSpeech()
             },
             {
                 icon: 'volume-2',
                 style: 'primary'
+            }
+        )
+
+        this._stopButton = new Button(
+            'ހުއްޓާލާ',
+            () => {
+                this._player.stop()
+                this._stopButton.hide()
+            },
+            {
+                icon: 'square'
             }
         )
 
@@ -31,17 +47,16 @@ module.exports = class WebsiteReaderPage extends Page {
             }
         )
 
-        this._player = new ArticlePlayer()
+        
     }
 
-    webToSpeech(url, targetUrl) {
+    webToSpeech() {
         const urlResult = new URL(webTtsUrl)
         Object.entries(this.form.value()).forEach(
             ([name, value]) => {
                 urlResult.searchParams.append(name, value)
             }
         )
-        console.log(urlResult.href)
 
         this._spinner.show()
         var xhr = new XMLHttpRequest();
@@ -50,8 +65,6 @@ module.exports = class WebsiteReaderPage extends Page {
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var json = JSON.parse(xhr.responseText);
-                console.log(json);
-                this.playAudio(json.audio_url);
                 this.displayArticle(json.article);
             }
             this._spinner.hideSoft()
@@ -60,20 +73,11 @@ module.exports = class WebsiteReaderPage extends Page {
         
     }
 
-    playAudio(url) {
-        var audio = new Audio(url)
-        audio.type = 'audio/wav'
-        try {
-            audio.play();
-            console.log('Playing...');
-        } catch (err) {
-            console.log('Failed to play...' + err);
-        }
-    }
-
     displayArticle(article) {
         this._player.show()
         this._player.set(article)
+        this._player.play()
+        this._stopButton.show()
     }
 
     createElement() {
@@ -88,6 +92,7 @@ module.exports = class WebsiteReaderPage extends Page {
         this.element.appendChild(this._toolBarElement)
 
         this._toolBarElement.appendChild(this._playButton.createElement())
+        this._toolBarElement.appendChild(this._stopButton.createElement())
         this._toolBarElement.appendChild(this._spinner.createElement())
 
         this.element.appendChild(this._player.createElement())
@@ -95,6 +100,7 @@ module.exports = class WebsiteReaderPage extends Page {
         this._player.hide()
 
         this._spinner.hideSoft()
+        this._stopButton.hide()
 
         return this.element
     }

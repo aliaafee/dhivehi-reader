@@ -10,6 +10,7 @@ class Num2Word_DV:
         self.negword = "މައިނަސް"
         self.pointword = "ޕޮއިންޓް"
         self.ordword = "ވަނަ"
+        self.bcword = "ބީ.ސީ"
         self.base_stem = {
             0: "ސުން",
             1: "އެއް",
@@ -33,8 +34,8 @@ class Num2Word_DV:
             "ސެޕްޓިލި",
             "ސެކްސްޓިލި",
             "ކުއިންޓިލި",
-            "ކުއަޑްރި",
-            "ޓްރި",
+            "ކުއަޑްރިލި",
+            "ޓްރިލި",
             "ބިލި",
             "މިލި"
         ]
@@ -43,8 +44,8 @@ class Num2Word_DV:
         self.cards[1000] = "ހާސް"
 
         self.MAXVAL = Decimal(list(self.cards.keys())[0] * 1000)
-        getcontext().prec = 34
-        getcontext().rounding = ROUND_FLOOR
+        #getcontext().prec = 34
+        #getcontext().rounding = ROUND_FLOOR
 
         self.grouping = [-3, -5] + [(x*3 + 6)*-1 for x in range(len(self.cards))] 
 
@@ -233,6 +234,10 @@ class Num2Word_DV:
  
     
     def to_decimal(self, value):
+        if isinstance(value, float):
+            #This is to fix rounding error when directly converting floats to
+            #Decimal 12.51 to 12.509999....
+            value = str(value)
         try:
             return Decimal(value)
         except InvalidOperation:
@@ -287,8 +292,23 @@ class Num2Word_DV:
         return "{} {}".format(value, self.ordword)
 
 
-    def to_year(self, value):
-        return self.to_cardinal(value)
+    def to_year(self, value, suffix=""):
+        if value < 0:
+            value = abs(value)
+            suffix = self.bcword if not suffix else suffix
+        high, low = (value // 100, value % 100)
+        if value < 2000 and value > 1000:
+            return " ".join([
+                self.to_cardinal(high),
+                "ސަތޭކަ",
+                " ",
+                self.to_cardinal(low),
+                suffix
+            ])
+        return " ".join([
+            self.to_cardinal(value),
+            suffix
+        ])
 
 
     def to_currency(self, value, currency="ރުފިޔާ", cents="ލާރި"):

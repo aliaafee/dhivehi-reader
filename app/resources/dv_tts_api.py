@@ -25,11 +25,7 @@ def dv_tts_index():
 @api.route("/dv-tts/from-url")
 def from_url():
     """
-        Accepts a url supplied via query string,
-        converts text in the url to speech,
-        returns a url to the speech file
-        and also the text scraped from the website that will be spoken
-        as json
+        Accepts a url supplied via query string
     """
     str_url = request.args.get('u', "", type=str)
 
@@ -70,7 +66,7 @@ def from_text():
     """
         Accepts text as POST data in json format
         converts text to speech
-        returns a url to the speech file.
+        returns base64 encoded wav audio
     """
     data =  request.get_json()
 
@@ -80,22 +76,11 @@ def from_text():
     if not 'text' in data:
         return unprocessable("`text` not found in data")
 
-    speech_text = all_numbers_to_words(data['text'])
-
-
-    output_filename_rel = Path('sound', 'abc.wav') #os.path.join('sound', 'abc.wav')
-    output_filename_abs = Path(current_app.static_folder) / output_filename_rel
-
-    tts_result = tts_soundfile(speech_text, female_tts, output_filename_abs, speed=0.95)
-
-    if not tts_result:
-        return jsonify({
-            'error': "TTS failed",
-            'transcript': speech_text
-        })
+    transcript = all_numbers_to_words(data['text'])
 
     return jsonify({
-        'audio_url': url_for('static', filename=output_filename_rel.as_posix(), _external=True)
+        'audio_base64wav': tts_base64wav(transcript, female_tts, speed=0.95),
+        'trascript': transcript
     })
 
 
