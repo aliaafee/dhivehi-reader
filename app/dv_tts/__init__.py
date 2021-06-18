@@ -2,6 +2,7 @@ import os.path
 from pathlib import Path
 import soundfile
 from io import BytesIO
+import base64
 
 
 def get_female_tts_model(load=True):
@@ -57,3 +58,9 @@ def tts_stream(text, tts_model, speed=0.95):
     audio_data.seek(0)
 
     return audio_data.read()
+
+
+def tts_base64wav(text, tts_model, speed=0.95):
+    audio_file = tts_stream(text, tts_model, speed)
+
+    return "data:audio/wav;base64," + base64.standard_b64encode(audio_file).decode()

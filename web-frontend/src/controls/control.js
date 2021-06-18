@@ -2,7 +2,7 @@
 module.exports = class Control {
     constructor(options = {}) {
         /* Options
-         *  widht, height =  css size
+         *  width, height =  css size
          *  className = class name of the element
          *  id = html id of element
          *  tabIndex = the tab index
