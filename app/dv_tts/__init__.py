@@ -1,6 +1,8 @@
 import os.path
 from pathlib import Path
 import soundfile
+from io import BytesIO
+
 
 def get_female_tts_model(load=True):
     if not load: #Dont load model to speed up testing
@@ -37,3 +39,21 @@ def tts_soundfile(text, tts_model, out_filename, speed=0.95):
     )
 
     return True
+
+
+def tts_stream(text, tts_model, speed=0.95):
+    output_wav = tts_model(text, speed=speed)
+
+    audio_data = BytesIO()
+
+    soundfile.write(
+        audio_data,
+        output_wav.astype('int16'),
+        22050,
+        subtype='PCM_16',
+        format="WAV"
+    )
+    
+    audio_data.seek(0)
+
+    return audio_data.read()

@@ -1,12 +1,12 @@
 from pathlib import Path
 from flask.wrappers import Request
-from flask import json, request, jsonify, current_app, url_for
+from flask import json, request, jsonify, current_app, url_for, Response
 
 from .errors import unprocessable
 
 from . import api
 from ..web_scrape import scrape_page
-from ..dv_tts import get_female_tts_model, tts_soundfile
+from ..dv_tts import get_female_tts_model, tts_soundfile, tts_stream
 from ..preprocessing import all_numbers_to_words
 
 female_tts = get_female_tts_model()
@@ -17,7 +17,8 @@ female_tts = get_female_tts_model()
 def dv_tts_index():
     return jsonify({
         'from_text': url_for('api.from_text', _external=True),
-        'from_url': url_for('api.from_url', _external=True)
+        'from_url': url_for('api.from_url', _external=True),
+        'stream_from_text': url_for('api.stream_from_text', _external=True)
     })
 
 
@@ -101,3 +102,13 @@ def from_text():
     return jsonify({
         'audio_url': url_for('static', filename=output_filename_rel.as_posix(), _external=True)
     })
+
+
+@api.route("/dv-tts/stream-from-text")
+def stream_from_text():
+    text = request.args.get('text', "", type=str)
+
+    return Response(
+        tts_stream(text, female_tts),
+        mimetype="audio/wav"
+    )
