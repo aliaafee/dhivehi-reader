@@ -32,7 +32,7 @@ input.url {
     font-size: 11pt;
 }
 
-.article-display {
+.article-player {
     padding: 10px;
     border: 1px solid var(--border);
     border-radius: var(--border-radius);
@@ -40,9 +40,22 @@ input.url {
     background-color: var(--white);
 }
 
+.article-player * span {
+    cursor: pointer;
+}
+
+.article-player * span:hover {
+    background-color: var(--hover);
+}
+
+.article-player * span.playing {
+    background-color: var(--primary-light);
+}
+
 .playback-toolbar {
     display: flex;
     margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .playback-toolbar button:first-child {

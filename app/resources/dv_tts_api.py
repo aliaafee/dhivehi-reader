@@ -6,7 +6,7 @@ from .errors import unprocessable
 
 from . import api
 from ..web_scrape import scrape_page
-from ..dv_tts import get_female_tts_model, tts_soundfile, tts_stream
+from ..dv_tts import get_female_tts_model, tts_soundfile, tts_stream, tts_base64wav
 from ..preprocessing import all_numbers_to_words
 
 female_tts = get_female_tts_model()
@@ -25,11 +25,7 @@ def dv_tts_index():
 @api.route("/dv-tts/from-url")
 def from_url():
     """
-        Accepts a url supplied via query string,
-        converts text in the url to speech,
-        returns a url to the speech file
-        and also the text scraped from the website that will be spoken
-        as json
+        Accepts a url supplied via query string
     """
     str_url = request.args.get('u', "", type=str)
 
@@ -41,31 +37,26 @@ def from_url():
     if not page_contents:
         return unprocessable("Could not get text from webpage.")
 
-    speech_text = ""
+    def process(text, transcript):
+        transcript = all_numbers_to_words(transcript)
+        return {
+            'text': text,
+            'transcript': transcript,
+            'audio_base64wav': tts_base64wav(transcript, female_tts, speed=0.95)
+        }
+
+    result = {}
     if page_contents['title']:
-        speech_text += "ސުރުޙީ" + " " + all_numbers_to_words(page_contents['title']) + ". "
+        result['title'] = process(page_contents['title'], "ސުރުޙީ" + " " + page_contents['title'] + ".")
     if page_contents['time']:
-        speech_text += "ތާރީޚު" + " " + all_numbers_to_words(page_contents['time']) + ". "
+        result['time'] = process(page_contents['time'], "ތާރީޚު" + " " + page_contents['time'] + ".")
     if page_contents['author']:
-        speech_text += "ލިޔުނީ" + " " + all_numbers_to_words(page_contents['author']) + ". "
+        result['author'] = process(page_contents['author'], "ލިޔުނީ" + " " + page_contents['author'] + ".")
     if page_contents['content']:
-        speech_text += all_numbers_to_words(" ".join(page_contents['content']))
-
-    output_filename_rel = Path('sound', 'websound.wav')
-    output_filename_abs = Path(current_app.static_folder) / output_filename_rel
-
-    tts_result = tts_soundfile(speech_text, female_tts, output_filename_abs, speed=0.95)
-
-    if not tts_result:
-        return jsonify({
-            'error': "TTS failed",
-            'article': page_contents,
-            'transcript': speech_text
-        })
+        result['content'] = [process(para, para) for para in page_contents['content']] 
 
     return jsonify({
-        'audio_url': url_for('static', filename=output_filename_rel.as_posix(), _external=True),
-        'article': page_contents
+        'article': result
     })
 
 
@@ -75,7 +66,7 @@ def from_text():
     """
         Accepts text as POST data in json format
         converts text to speech
-        returns a url to the speech file.
+        returns base64 encoded wav audio
     """
     data =  request.get_json()
 
@@ -85,22 +76,11 @@ def from_text():
     if not 'text' in data:
         return unprocessable("`text` not found in data")
 
-    speech_text = all_numbers_to_words(data['text'])
-
-
-    output_filename_rel = Path('sound', 'abc.wav') #os.path.join('sound', 'abc.wav')
-    output_filename_abs = Path(current_app.static_folder) / output_filename_rel
-
-    tts_result = tts_soundfile(speech_text, female_tts, output_filename_abs, speed=0.95)
-
-    if not tts_result:
-        return jsonify({
-            'error': "TTS failed",
-            'transcript': speech_text
-        })
+    transcript = all_numbers_to_words(data['text'])
 
     return jsonify({
-        'audio_url': url_for('static', filename=output_filename_rel.as_posix(), _external=True)
+        'audio_base64wav': tts_base64wav(transcript, female_tts, speed=0.95),
+        'trascript': transcript
     })
 
 

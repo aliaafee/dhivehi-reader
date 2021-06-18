@@ -46,7 +46,7 @@ module.exports = class TextReaderPage extends Page {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var json = JSON.parse(xhr.responseText);
                 console.log(json);
-                this.playAudio(json.audio_url);
+                this.playAudio(json.audio_base64wav);
             }
             this._spinner.hideSoft()
         };
@@ -70,16 +70,14 @@ module.exports = class TextReaderPage extends Page {
 
         this.element.innerHTML = `<p>ތިރީގައިވާ ހުސްތަނުގައި ލިޔެލުމައްފަހު "ޕްލޭ" ބަޓން އަށް ފިތާލާ.</p>`
 
+        this.element.appendChild(this._textBox.createElement())
+
         this._toolBarElement = document.createElement('div')
         this._toolBarElement.className = 'playback-toolbar'
         this.element.appendChild(this._toolBarElement)
 
         this._toolBarElement.appendChild(this._playButton.createElement())
         this._toolBarElement.appendChild(this._spinner.createElement())
-        
-        
-
-        this.element.appendChild(this._textBox.createElement())
 
         this._spinner.hideSoft()
 
