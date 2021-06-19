@@ -5,7 +5,7 @@ class ArticleSection extends Control {
     constructor(index, content, onClick, options={}) {
         /* Options
          *  type= h1, h2, p, ... etc (vald tag name)
-         *  content = {text: '', audio_base64wav: '', transcript: ''}
+         *  content = {text: '', audio_url: '', transcript: ''}
          */
         super(options)
 
@@ -72,7 +72,7 @@ module.exports = class ArticlePlayer extends Control {
                     this._playSection(this._sections[this._playHeadPosition])
                 }
             }
-            this._audioPlayer.src = section.content.audio_base64wav
+            this._audioPlayer.src = section.content.audio_url
             this._audioPlayer.play()
         }
         this._audioPlayer.addEventListener('pause', () => { this._onDonePlaying(false) })

@@ -46,7 +46,7 @@ module.exports = class TextReaderPage extends Page {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 var json = JSON.parse(xhr.responseText);
                 console.log(json);
-                this.playAudio(json.audio_base64wav);
+                this.playAudio(json.audio_url);
             }
             this._spinner.hideSoft()
         };

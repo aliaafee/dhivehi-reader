@@ -42,7 +42,7 @@ def from_url():
         return {
             'text': text,
             'transcript': transcript,
-            'audio_base64wav': tts_base64wav(transcript, female_tts, speed=0.95)
+            'audio_url': tts_base64wav(transcript, female_tts, speed=0.95)
         }
 
     result = {}
@@ -79,7 +79,7 @@ def from_text():
     transcript = all_numbers_to_words(data['text'])
 
     return jsonify({
-        'audio_base64wav': tts_base64wav(transcript, female_tts, speed=0.95),
+        'audio_url': tts_base64wav(transcript, female_tts, speed=0.95),
         'trascript': transcript
     })
 
