@@ -2,19 +2,23 @@ from urllib.parse import urlparse
 
 from requests.models import ReadTimeoutError
 
-from . import mihaaru, dhen
+from . import default, mihaaru, dhen, gazette
 
 
 SCRAPERS = {
     'mihaaru.com': mihaaru.scrape,
-    'dhen.mv': dhen.scrape
+    'dhen.mv': dhen.scrape,
+    'www.gazette.gov.mv': gazette.scrape
 }
 
 
 def get_scraper(url):
     u = urlparse(url)
 
+    if not u.netloc:
+        u = urlsplit(f"http://{url}")
+
     if u.netloc not in SCRAPERS:
-        return None
+        return default.scrape
         
     return SCRAPERS[u.netloc]

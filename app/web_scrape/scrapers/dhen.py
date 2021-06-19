@@ -16,7 +16,7 @@ months = {"January":"ޖެނުއަރީ",
           "November":"ނޮވެމްބާ",
           "December":"ޑިސެމްބާ"}
 
-def scrape(html_text):
+def scrape(url, html_text):
     print("Scraping Dhen...")
 
     soup = BeautifulSoup(html_text, 'html.parser')
