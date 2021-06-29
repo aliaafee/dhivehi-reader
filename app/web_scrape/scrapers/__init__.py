@@ -16,7 +16,7 @@ def get_scraper(url):
     u = urlparse(url)
 
     if not u.netloc:
-        u = urlsplit(f"http://{url}")
+        u = urlparse(f"http://{url}")
 
     if u.netloc not in SCRAPERS:
         return default.scrape

@@ -11,4 +11,4 @@ numpy
 soundfile
 gunicorn
 bs4
-
+python-magic
