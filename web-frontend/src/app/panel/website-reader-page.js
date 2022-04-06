@@ -50,27 +50,41 @@ module.exports = class WebsiteReaderPage extends Page {
         
     }
 
-    webToSpeech() {
+    generateUrl() {
         const urlResult = new URL(webTtsUrl)
         Object.entries(this.form.value()).forEach(
             ([name, value]) => {
                 urlResult.searchParams.append(name, value)
             }
-        )
+        );
+        return urlResult.href;
+    }
 
+    async webToSpeech() {
         this._spinner.show()
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", urlResult.href, true);
-        //xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var json = JSON.parse(xhr.responseText);
-                this.displayArticle(json.article);
-            }
-            this._spinner.hideSoft()
-        };
-        xhr.send();
-        
+
+        const url = this.generateUrl();
+
+        console.log(url);
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            this._spinner.hideSoft();
+            return;
+        }
+
+        const content = await response.json();
+
+        if (!('article' in content)) {
+            this._spinner.hideSoft();
+            return;
+        }
+
+        this.displayArticle(content.article);
+        console.log("Success");
+
+        this._spinner.hideSoft()
     }
 
     displayArticle(article) {

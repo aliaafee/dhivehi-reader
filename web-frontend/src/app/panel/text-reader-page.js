@@ -37,21 +37,35 @@ module.exports = class TextReaderPage extends Page {
         )
     }
 
-    textToSpeech(url, text) {
+    async textToSpeech(url, text) {
         this._spinner.show()
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                var json = JSON.parse(xhr.responseText);
-                console.log(json);
-                this.playAudio(json.audio_url);
-            }
-            this._spinner.hideSoft()
-        };
-        var data = JSON.stringify({"text": text});
-        xhr.send(data);
+
+        const response = await fetch(url,{
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"text": text})
+        });
+
+        if (!response.ok) {
+            this._spinner.hideSoft();
+            return;
+        }
+
+        const content = await response.json();
+
+        if (!('audio_url' in content)) {
+            this._spinner.hideSoft();
+            return;
+        }
+
+        this.playAudio(content.audio_url);
+        console.log("Success");
+
+        this._spinner.hideSoft()
+
     }
 
     playAudio(url) {
