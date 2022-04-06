@@ -54,7 +54,8 @@ module.exports = class MainPanel extends Control {
                     this.gotoPage('websiteReader')
                 },
                 {
-                    icon: 'globe'
+                    icon: 'globe',
+                    page: 'websiteReader'
                 }
             )
         )
@@ -67,7 +68,8 @@ module.exports = class MainPanel extends Control {
                     this.gotoPage('textReader')
                 },
                 {
-                    icon: 'file-text'
+                    icon: 'file-text',
+                    page: 'textReader'
                 }
             )
         )
@@ -104,7 +106,8 @@ module.exports = class MainPanel extends Control {
                     this.gotoPage('about')
                 },
                 {
-                    icon: 'help-circle'
+                    icon: 'help-circle',
+                    page: 'about'
                 }
             )
         )
@@ -188,6 +191,16 @@ module.exports = class MainPanel extends Control {
             }
         )
         this._pages[name].show()
+
+        this._sidebarItems.forEach((item) => {
+            if (item != '_spacer') {
+                if (item.options.page == name) {
+                    item.lock();
+                } else {
+                    item.unlock();
+                }
+            }
+        });
     }
 
     createElement() {
